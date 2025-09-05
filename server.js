@@ -19,10 +19,17 @@ app.use(
 
 app.use(
   session({
-    secret: "klickks_secret_key",
+    key: "sessionId",
+    secret: "yourSecret",
+    store: sessionStore, // MySQL session store
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false, httpOnly: true, maxAge: 1000 * 60 * 60 }, // 1 hour
+    cookie: {
+        secure: true,        // true in production (HTTPS only)
+        httpOnly: true,      // prevent JS access
+        sameSite: "none",    // allow cross-site cookies
+        maxAge: 1000 * 60 * 60 * 24 // 1 day
+    }
   })
 );
 
