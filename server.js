@@ -18,8 +18,7 @@ const allowedOrigins = [
   "https://klickksauth.netlify.app",
 ];
 
-app.use(
-  cors({
+const corsOptions = {
     origin: (origin, callback) => {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
@@ -29,8 +28,7 @@ app.use(
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  })
-);
+};
 
 app.use(cors(corsOptions));
 
