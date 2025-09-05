@@ -8,7 +8,7 @@ import SQLiteStoreFactory from "connect-sqlite3";
 const SQLiteStore = SQLiteStoreFactory(session);
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = 4000;
 
 app.use(express.json());
 app.use(cookieParser());
@@ -31,6 +31,8 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   })
 );
+
+app.use(cors(corsOptions));
 
 if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1);
