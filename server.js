@@ -15,12 +15,14 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: process.env.NODE_ENV === "production"
-      ? "https://your-frontend.onrender.com"
-      : "http://localhost:3000",
+    origin: true,
     credentials: true,
   })
 );
+
+if (process.env.NODE_ENV === "production") {
+  app.set("trust proxy", 1);
+}
 
 app.use(
   session({
@@ -43,5 +45,5 @@ app.use(
 app.use("/", authRoutes);
 
 app.listen(PORT, () => {
-  console.log(`✅ Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
