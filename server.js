@@ -32,8 +32,6 @@ app.use(
   })
 );
 
-app.options("/*", cors());
-
 if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1);
 }
