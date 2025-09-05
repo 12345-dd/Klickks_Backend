@@ -15,7 +15,7 @@ app.use(cookieParser());
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://klickks-frontend.onrender.com",
+  "https://klickksauth.netlify.app",
 ];
 
 app.use(
