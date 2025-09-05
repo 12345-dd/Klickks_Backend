@@ -13,20 +13,28 @@ const PORT = process.env.PORT || 4000;
 app.use(express.json());
 app.use(cookieParser());
 
-// ✅ CORS setup (local only for now)
+// ✅ Allowed origins (localhost + production)
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://klickks-frontend.onrender.com", // change once frontend is deployed
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173", // React dev server
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   })
 );
 
-// ✅ Handle preflight
-app.options("*", cors({
-  origin: "http://localhost:5173",
-  credentials: true,
-}));
+// ✅ Preflight support
+app.options("*", cors());
 
 if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1);
@@ -55,4 +63,5 @@ app.use("/", authRoutes);
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
 
