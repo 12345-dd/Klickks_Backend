@@ -13,10 +13,9 @@ const PORT = process.env.PORT || 4000;
 app.use(express.json());
 app.use(cookieParser());
 
-// ✅ Allowed origins (localhost + production)
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://klickks-frontend.onrender.com", // change once frontend is deployed
+  "https://klickks-frontend.onrender.com",
 ];
 
 app.use(
@@ -33,7 +32,6 @@ app.use(
   })
 );
 
-// ✅ Preflight support
 app.options("*", cors());
 
 if (process.env.NODE_ENV === "production") {
@@ -43,17 +41,17 @@ if (process.env.NODE_ENV === "production") {
 app.use(
   session({
     store: new SQLiteStore({
-      db: "sessions.sqlite", // file will be created automatically
+      db: "sessions.sqlite",
       dir: "./",
     }),
     secret: "klickks_secret_key",
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: process.env.NODE_ENV === "production", // HTTPS only in prod
+      secure: process.env.NODE_ENV === "production",
       httpOnly: true,
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      maxAge: 1000 * 60 * 60, // 1 hour
+      maxAge: 1000 * 60 * 60,
     },
   })
 );
